@@ -84,7 +84,7 @@ plot = study %>%
 plot
 ```
 
-Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups.
+* This plot shows the trends in results over time, stratified by study arm (experimental vs. control). Just by looking at the graph, there appears to be a difference in results between the control and experimental groups; control subjects appear to have lower results over time, while experimental subjects appear to have increasing results over the 8 week study period. Further statistical tests would need to be done in order to determine the significance of the apparent difference between study arms. 
 
 # Problem 3
 
