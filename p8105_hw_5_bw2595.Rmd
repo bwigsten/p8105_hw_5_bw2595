@@ -71,10 +71,16 @@ study = tibble(
     values_to = "result")
 study
 ```
+
 ```{r}
 plot = study %>%
-  ggplot(aes(x = week, y = result)) +
-  geom_line()
+  ggplot(aes(x = week, y = result, group = participant, color = study_arm)) +
+  geom_line() +
+  labs(
+    title = "Observations for Each Subject Over Time", 
+    x = "Week", 
+    y = "Results"
+  )
 plot
 ```
 
