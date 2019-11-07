@@ -5,10 +5,6 @@ date: "11/6/2019"
 output: html_document
 ---
 
-```{r}
-getwd()
-```
-
 # Problem 1: load packages 
 
 ```{r}
@@ -37,8 +33,6 @@ iris_full = map_df(iris_with_missing, replaced_iris)
 iris_full
 ```
 
-
-
 # Problem 2
 
 * Start with a dataframe containing all file names; the list.files function will help
@@ -52,6 +46,39 @@ data = tibble(
 data
 ```
 
+
+```{r}
+data = function(path){
+  case_control = read_csv(path)
+  case_control
+} 
+
+directory = "./data"
+study = tibble(
+  participant = list.files(path = "./data"),
+  files = str_c(directory, "/", participant)) %>%
+  mutate(
+    weekly_data = map(files, read_csv),
+    participant = str_replace(participant, ".csv", "")) %>%
+  unnest() %>%
+  mutate(
+  study_arm = if_else(participant %in% c("con_01", "con_02", "con_03", "con_04", "con_05", "con_06", "con_07", "con_08", "con_09", "con_10"), "control", participant),
+  study_arm = if_else(participant %in% c("exp_01", "exp_02", "exp_03", "exp_04", "exp_05", "exp_06", "exp_07", "exp_08", "exp_09", "exp_10"), "experimental", study_arm)) %>%
+  pivot_longer(
+    week_1:week_8,
+    names_to = "week", 
+    names_prefix = "week_", 
+    values_to = "result")
+study
+```
+```{r}
+plot = study %>%
+  ggplot(aes(x = week, y = result)) +
+  geom_line()
+plot
+```
+
+Make a spaghetti plot showing observations on each subject over time, and comment on differences between groups.
 
 # Problem 3
 
