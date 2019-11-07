@@ -9,3 +9,47 @@ output: html_document
 getwd()
 ```
 
+# Problem 1: load packages 
+
+```{r}
+library(tidyverse)
+library(readr)
+library(purrr)
+
+set.seed(10)
+
+iris_with_missing = iris %>% 
+  map_df(~replace(.x, sample(1:150, 20), NA)) %>%
+  mutate(Species = as.character(Species))
+iris_with_missing
+```
+
+```{r}
+replaced_iris = function(x) {
+  if(is.numeric(x)) {
+    ifelse(is.na(x), mean(x, na.rm = TRUE), x)
+  } else if (is.character(x)) {
+    ifelse(is.na(x), "virginica", x)
+  }
+}
+
+iris_full = map_df(iris_with_missing, replaced_iris)
+iris_full
+```
+
+
+
+# Problem 2
+
+* Start with a dataframe containing all file names; the list.files function will help
+* Iterate over file names and read in data for each subject using purrr::map and saving the result as a new variable in the dataframe
+* Tidy the result; manipulate file names to include control arm and subject ID, make sure weekly observations are “tidy”, and do any other tidying that’s necessary
+
+```{r}
+data = tibble(
+  observation = list.files(path = "./data")
+)
+data
+```
+
+
