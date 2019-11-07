@@ -1,0 +1,11 @@
+---
+title: "p8105_hw_5_bw2595"
+author: "Blair Wigsten"
+date: "11/6/2019"
+output: html_document
+---
+
+```{r}
+getwd()
+```
+
