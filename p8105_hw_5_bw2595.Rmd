@@ -81,3 +81,26 @@ results = tibble(
 results
 ```
 
+Make a plot showing the proportion of times the null was rejected (the power of the test) on the y axis and the true value of β2 on the x axis. Describe the association between effect size and power. 
+
+```{r}
+graph1 = results %>%
+  mutate(
+    significant = cut(p.value, breaks = c(0, 0.05, Inf), labels = c("significant", "not significant"))) %>%
+  group_by(beta1, significant) %>%
+  summarize(number = n()) %>%
+  mutate(
+    proportion = number / sum(number),
+     as.character(beta1)) %>%
+  filter(significant == "significant") %>%
+  ggplot(aes(x = beta1, y = proportion)) +
+  geom_point() + geom_line(group = 1) +
+  labs(
+      title = "Power of the Test",
+      x = "True Value of Beta1",
+      y = "Proportion of Times Null was Rejected")
+graph1
+```
+
+* As the true value of Beta1 increases (the effect size), the power of the test increases. As beta1 moves from 1 to 4, the increase is drastic, then approaches the asymptote of 1 as the effect size reaches 6. 
+
