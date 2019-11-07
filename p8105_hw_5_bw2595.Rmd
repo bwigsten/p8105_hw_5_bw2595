@@ -104,3 +104,42 @@ graph1
 
 * As the true value of Beta1 increases (the effect size), the power of the test increases. As beta1 moves from 1 to 4, the increase is drastic, then approaches the asymptote of 1 as the effect size reaches 6. 
 
+```{r}
+graph2 = results %>%
+  group_by(beta1) %>%
+  mutate(
+    mean_beta1_estimate = mean(estimate)
+  ) %>%
+  select(beta1, mean_beta1_estimate) %>%
+  ggplot(aes(x = beta1, y = mean_beta1_estimate)) +
+  geom_point() +
+  labs(
+      title = "Average Beta1 vs. True Beta1",
+      x = "True Value of Beta1",
+      y = "Average Value of Beta1")
+graph2
+```
+
+* This plot shows the average estimate of beta1 vs. the true value of beta1. 
+
+```{r}
+graph3 = results %>%
+  mutate(
+    significant = cut(p.value, breaks = c(0, 0.05, Inf), labels = c("significant", "not significant"))) %>%
+  filter(significant == "significant") %>%
+  group_by(beta1) %>%
+  mutate(
+    mean_beta1_estimate = mean(estimate)
+  ) %>%
+  select(beta1, mean_beta1_estimate) %>%
+  ggplot(aes(x = beta1, y = mean_beta1_estimate)) +
+  geom_point() +
+  labs(
+      title = "Average Beta1 vs. True Beta1 Among Significant Results",
+      x = "True Value of Beta1",
+      y = "Average Value of Beta1")
+graph3
+  
+```
+
+* The sample average of estimated beta1 is not approximately equal to the true value of beta1. This is to be expected, as the hypothesis test determines which estimates are significantly different from the true betas. Therefore, by restricting results to significant p-values, we are only plotting points that are statistically significantly different from the true values.
