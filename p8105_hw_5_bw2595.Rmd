@@ -35,13 +35,11 @@ replaced_iris = function(x) {
 iris_full = map_df(iris_with_missing, replaced_iris)
 iris_full
 ```
+
 * The resulting function replaces all missing character values with "virginica", and replaces all missing numeric values with the mean of non-missing values. The function is applied to the columns of the missing dataset using a map statement. 
 
 
 # Problem 2
-
-* 
-* Tidy the result; manipulate file names to include control arm and subject ID, make sure weekly observations are “tidy”, and do any other tidying that’s necessary
 
 ## Start with a dataframe containing all file names
 ```{r}
@@ -50,6 +48,7 @@ data = tibble(
 )
 data
 ```
+
 * The "data" set lists all files contained in the zip file. 
 
 ## Iterate over file names and read in data for each subject and save the result as a new variable in the dataframe and tidy the resulting dataset
@@ -125,6 +124,8 @@ results = tibble(
 results
 ```
 
+* The resulting dataset contains all true beta1's, all terms (x), all beta1 estimates, standard errors, test statistics and p-values of the beta1 estiamtes. 
+
 ## Make a plot showing the proportion of times the null was rejected (the power of the test) on the y axis and the true value of β2 on the x axis
 
 ```{r}
@@ -149,6 +150,7 @@ graph1
 * As the true value of Beta1 increases (the effect size), the power of the test increases. As beta1 moves from 1 to 4, the increase is drastic, then approaches the asymptote of 1 as the effect size reaches 6. 
 
 ## Make a plot showing the average estimate of β̂ 1 on the y axis and the true value of β1 on the x axis.
+
 ```{r}
 graph2 = results %>%
   group_by(beta1) %>%
