@@ -128,7 +128,7 @@ results
 
 ## Make a plot showing the proportion of times the null was rejected (the power of the test) on the y axis and the true value of β2 on the x axis
 
-```{r}
+```{r} 
 graph1 = results %>%
   mutate(
     significant = cut(p.value, breaks = c(0, 0.05, Inf), labels = c("significant", "not significant"))) %>%
